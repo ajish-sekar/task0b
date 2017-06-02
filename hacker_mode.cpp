@@ -6,12 +6,13 @@ using namespace std;
 struct customer{
        int id;
        int arrival, time_req, departure, turnaround;
-       int priority, quanta;
+       int priority, quanta, waiting;
        
        void input()
        {
-            cout<<"Enter customer id, time of arrival, time required, priority\n";
-            cin>>id>>arrival>>time_req>>priority;
+            cout<<"Enter customer id, time of arrival, time required, time quanta\n";
+            cin>>id>>arrival>>time_req>>quanta;
+            waiting = arrival;
             }
             };
             
@@ -55,7 +56,7 @@ void fcfs(customer a[1000], int no)
 void priority(customer a[1000], int n)
 {
      int i, time = 0, max,index,flag=0;
-     for(time = 0;time<20 ; time++)
+     for(time = 0; ; time++)
      {
               flag = 0;
               for(i=0;i<n;i++)
@@ -88,6 +89,48 @@ void priority(customer a[1000], int n)
                       cout<<"Customer: "<<a[i].id<<" Departure: "<<a[i].departure<<" Turn around time: "<<a[i].departure-a[i].arrival<<"\n";
                       }
 }
+
+void rrf(customer a[1000], int n)
+{
+     int i, time = 0;
+     while(1)
+     {
+             int flag = 0;
+              for(i=0;i<n;i++)
+              {
+                              if(a[i].time_req>0)
+                                  flag=1;
+                                  }
+              if(flag==0)
+                 break;
+              int max =a[0].waiting - time, index = 0;
+              for(i=0;i<n;i++)
+              {
+                              if((max<time-a[i].waiting)&&(a[i].waiting<time)&&(a[i].time_req>0))
+                              {
+                                                                                                 max=time-a[i].waiting;
+                                                                                                 index=i;
+                                                                                                 }
+              }
+              time+=a[index].quanta;
+              a[index].waiting=time;
+              a[index].time_req-=a[index].quanta;
+              
+               if(a[index].time_req <= 0)
+              {
+                                   a[index].departure = time;
+                                   }
+                                   }
+     
+        for(i=0;i<n;i++)
+     {
+                      cout<<"Customer: "<<a[i].id<<" Departure: "<<a[i].departure<<" Turn around time: "<<a[i].departure-a[i].arrival<<"\n";
+                      }
+}                                                                                
+                                                                                                 
+              
+     
+     
                                        
             
 int main()
@@ -101,6 +144,6 @@ int main()
                      c[i].input();
                      }
     sort(c,no);
-    priority(c,no);
+    rrf(c,no);
     getch();
 }
