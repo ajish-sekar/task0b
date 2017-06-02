@@ -10,8 +10,8 @@ struct customer{
        
        void input()
        {
-            cout<<"Enter customer id, time of arrival, time required\n";
-            cin>>id>>arrival>>time_req;
+            cout<<"Enter customer id, time of arrival, time required, priority\n";
+            cin>>id>>arrival>>time_req>>priority;
             }
             };
             
@@ -51,6 +51,43 @@ void fcfs(customer a[1000], int no)
                       cout<<"Customer: "<<a[i].id<<" Departure: "<<a[i].departure<<" Turn around time: "<<a[i].departure-a[i].arrival<<"\n";
                       }
 }
+
+void priority(customer a[1000], int n)
+{
+     int i, time = 0, max,index,flag=0;
+     for(time = 0;time<20 ; time++)
+     {
+              flag = 0;
+              for(i=0;i<n;i++)
+              {
+                              if(a[i].time_req>0)
+                                  flag=1;
+                                  }
+              if(flag==0)
+                 break;
+              max=a[0].priority;
+              index = 0;
+              for(i=1;i<n;i++)
+              {
+                              if((max<a[i].priority)&&(a[i].time_req>0)&&(time>=a[i].arrival))
+                              {
+                                                                         max = a[i].priority;
+                                                                         index=i;
+                                                                         }
+                                                                         }
+              a[index].time_req--;
+             
+              if(a[index].time_req == 0)
+              {
+                                   a[index].departure = time + 1;
+                                   a[index].priority = 0;
+                                   }
+                                   }
+      for(i=0;i<n;i++)
+     {
+                      cout<<"Customer: "<<a[i].id<<" Departure: "<<a[i].departure<<" Turn around time: "<<a[i].departure-a[i].arrival<<"\n";
+                      }
+}
                                        
             
 int main()
@@ -64,6 +101,6 @@ int main()
                      c[i].input();
                      }
     sort(c,no);
-    fcfs(c,no);
+    priority(c,no);
     getch();
 }
