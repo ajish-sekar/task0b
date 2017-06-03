@@ -31,7 +31,13 @@ void sobha(int q)
                             break;
                             }
                             }
+                            if(i==-1)
+                             {
+                                     cout<<"Not available\n";
+                                     return;
+                                     }
                             print(s);
+     
                             }
            
 void kamal(int q)
@@ -47,7 +53,11 @@ void kamal(int q)
                                             min = abs(q-k[i]);
                                             j=i;
                                             }
-                                            }
+      if(k[j]<q)
+      {
+                cout<<"Not available\n";
+                return;
+                }                                      }
       k[j] = k[j]- q; 
       print(k);
       }                            
@@ -62,6 +72,11 @@ void jasmine(int q)
                                                    l=i;
                                                    }
                                                    }
+     if(j[l]<q)
+     {
+               cout<<"Not available\n";
+               return;
+               }
      j[l] = j[l]-q;
      print(j);
      }

@@ -10,11 +10,20 @@ struct customer{
        
        void input()
        {
-            cout<<"Enter customer id, time of arrival, time required, time quanta\n";
-            cin>>id>>arrival>>time_req>>quanta;
+            cout<<"Enter customer id, time of arrival, time required, priority, time quanta\n";
+            cin>>id>>arrival>>time_req>>priority>>quanta;
             waiting = arrival;
             }
             };
+            
+void cpy(customer a[1000], customer c[1000], int n)
+{
+     int i;
+     for(i=0;i<n;i++)
+     {
+                     a[i]=c[i];
+                     }
+}
             
 void sort(customer a[1000], int n)
 {
@@ -135,7 +144,7 @@ void rrf(customer a[1000], int n)
             
 int main()
 {
-    customer c[1000];
+    customer c[1000], f[1000],p[1000],r[1000];
     int i,no;
     cout<<"Enter number of customers ";
     cin>>no;
@@ -144,6 +153,16 @@ int main()
                      c[i].input();
                      }
     sort(c,no);
-    rrf(c,no);
+    cpy(f,c,no);
+    cpy(p,c,no);
+    cpy(r,c,no);
+    cout<<"\nFirst come first serve method\n";
+    fcfs(f,no);
+
+    cout<<"\nPriority method\n";
+    priority(p,no);
+
+    cout<<"\nRound robin method\n";
+    rrf(r,no);
     getch();
 }
